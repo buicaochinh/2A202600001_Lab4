@@ -61,12 +61,17 @@ if __name__ == "__main__":
     print("  Gõ 'quit' để thoát")
     print("=" * 60)
 
+    messages = []
+
     while True:
         user_input = input("\nBạn: ").strip()
         if user_input.lower() in ("quit", "exit", "q"):
             break
 
+        messages.append(("human", user_input))
+
         print("\nTravelBuddy đang suy nghĩ...")
-        result = graph.invoke({"messages": [("human", user_input)]})
-        final = result["messages"][-1]
+        result = graph.invoke({"messages": messages})
+        messages = result["messages"]
+        final = messages[-1]
         print(f"\nTravelBuddy: {final.content}")
